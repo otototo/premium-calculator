@@ -1,27 +1,23 @@
-package com.pm.homework;
+package com.pm.homework.policy;
 
 import com.pm.homework.beans.policy.Policy;
 import com.pm.homework.beans.policy.object.subobject.PolicySubObject;
-import com.pm.homework.beans.policy.object.subobject.RiskType;
 
 import java.math.BigDecimal;
 
-public class TheftPolicyCalculator {
-    static final BigDecimal DEFAULT_COEFFICIENT = BigDecimal.valueOf(0.11);
-    static final BigDecimal LARGER_SUM_COEFFICIENT = BigDecimal.valueOf(0.05);
-    private static final BigDecimal INSURANCE_BOUNDARY = BigDecimal.valueOf(15);
+public class PolicyCalculator {
+    private BigDecimal sumInsured;
+    private BigDecimal coefficient;
 
-
-    private final BigDecimal sumInsured;
-    private final BigDecimal coefficient;
-
-    public TheftPolicyCalculator(Policy policy) {
+    public PolicyCalculator(PolicyCalculatorConfiguration configuration,
+                            Policy policy) {
         this.sumInsured = policy.getPolicyObjects().stream().flatMap(p -> p.getPolicySubObjects().stream())
-                .filter(pso -> RiskType.THEFT == pso.getRiskType())
+                .filter(configuration.getPolicyTypePredicate())
                 .map(PolicySubObject::getSumInsured)
                 .reduce(BigDecimal::add)
                 .orElse(BigDecimal.ZERO);
-        this.coefficient = sumInsured.compareTo(INSURANCE_BOUNDARY) > 0 ? LARGER_SUM_COEFFICIENT : DEFAULT_COEFFICIENT;
+        this.coefficient = sumInsured.compareTo(configuration.getInsuranceBoundary()) > 0 ?
+                configuration.getLargerSumCoefficient() : configuration.getDefaultCoefficient();
     }
 
     /*    PREMIUM_FIRE = SUM_INSURED_FIRE * COEFFICIENT_FIRE

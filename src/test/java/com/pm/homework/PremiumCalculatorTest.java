@@ -1,7 +1,5 @@
 package com.pm.homework;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import com.pm.homework.beans.policy.Policy;
 import com.pm.homework.beans.policy.PolicyStatus;
 import com.pm.homework.beans.policy.object.PolicyObject;

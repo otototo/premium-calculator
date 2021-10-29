@@ -11,10 +11,10 @@ class PolicyTest {
 
     @Test
     void beanEqualityTest() {
-        PolicyObject  po1 = new PolicyObject("456", Collections.emptySet());
-        Policy p1 = new Policy("123", PolicyStatus.APPROVED, Set.of(po1));
-        Policy p2 = new Policy("123", PolicyStatus.APPROVED, Set.of(po1));
-        Policy p3 = new Policy("123", PolicyStatus.APPROVED, Collections.emptySet());
+        PolicyObject po1 = new PolicyObject("456", Collections.emptySet());
+        Policy p1 = new Policy("123", PolicyStatus.REGISTERED, Set.of(po1));
+        Policy p2 = new Policy("123", PolicyStatus.REGISTERED, Set.of(po1));
+        Policy p3 = new Policy("123", PolicyStatus.REGISTERED, Collections.emptySet());
 
         Assertions.assertEquals(p1, p2);
         Assertions.assertEquals(p1.hashCode(), p2.hashCode());

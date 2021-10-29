@@ -1,10 +1,11 @@
 package com.pm.homework;
 
 import com.pm.homework.beans.policy.Policy;
+import com.pm.homework.policy.FirePolicyCalculator;
+import com.pm.homework.policy.TheftPolicyCalculator;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.function.Function;
 
 public class PremiumCalculator {
 

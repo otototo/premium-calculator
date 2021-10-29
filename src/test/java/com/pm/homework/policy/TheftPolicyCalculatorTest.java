@@ -1,4 +1,4 @@
-package com.pm.homework;
+package com.pm.homework.policy;
 
 import com.pm.homework.beans.policy.Policy;
 import com.pm.homework.beans.policy.PolicyStatus;
