@@ -1,10 +1,9 @@
-package com.pm.homework.beans.policy.object;
+package com.pm.homework.policy;
 
-import com.pm.homework.beans.ObjectUtil;
-import com.pm.homework.beans.policy.object.subobject.PolicySubObject;
-
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 public class PolicyObject {
@@ -13,15 +12,18 @@ public class PolicyObject {
 
     public PolicyObject(String name, Set<PolicySubObject> policySubObjects) {
         this.name = name;
-        this.policySubObjects = ObjectUtil.defaultOnNull(policySubObjects, Collections.emptySet());
+        this.policySubObjects = policySubObjects;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public Set<PolicySubObject> getPolicySubObjects() {
-        return policySubObjects;
+    public BigDecimal getInsuredAmountByType(RiskType type) {
+        return Optional.ofNullable(policySubObjects)
+                .orElse(Collections.emptySet())
+                .stream()
+                .filter(policySubObject -> policySubObject.getRiskType() == type)
+                .map(PolicySubObject::getSumInsured)
+                .filter(Objects::nonNull)
+                .reduce(BigDecimal::add)
+                .orElse(BigDecimal.ZERO);
     }
 
     @Override

@@ -1,10 +1,6 @@
 package com.pm.homework;
 
-import com.pm.homework.beans.policy.Policy;
-import com.pm.homework.beans.policy.PolicyStatus;
-import com.pm.homework.beans.policy.object.PolicyObject;
-import com.pm.homework.beans.policy.object.subobject.PolicySubObject;
-import com.pm.homework.beans.policy.object.subobject.RiskType;
+import com.pm.homework.policy.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -29,7 +25,7 @@ public class PremiumCalculatorTest {
 
     @ParameterizedTest
     @MethodSource("fireAndTheftInsuranceSource")
-    public void givenFireAndTheftInsuranceReturnCorrectPremium(BigDecimal fireInsuranceAmount,
+    void givenFireAndTheftInsuranceReturnCorrectPremium(BigDecimal fireInsuranceAmount,
                                                                BigDecimal theftInsuranceAmount,
                                                                String expectedPremium) {
         //given

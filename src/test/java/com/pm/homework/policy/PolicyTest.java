@@ -1,9 +1,9 @@
-package com.pm.homework.beans.policy;
+package com.pm.homework.policy;
 
-import com.pm.homework.beans.policy.object.PolicyObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Set;
 
@@ -18,17 +18,14 @@ class PolicyTest {
 
         Assertions.assertEquals(p1, p2);
         Assertions.assertEquals(p1.hashCode(), p2.hashCode());
-        Assertions.assertEquals(p1.getPolicyNumber(), p2.getPolicyNumber());
-        Assertions.assertEquals(p1.getStatus(), p2.getStatus());
         Assertions.assertNotEquals(p1, p3);
         Assertions.assertNotEquals(p1.hashCode(), p3.hashCode());
     }
-
+    
     @Test
-    void defaultsNullsForStatusAndObjects() {
-        Policy p = new Policy(null, null, null);
-        Assertions.assertEquals(p.getStatus(), PolicyStatus.REGISTERED);
-        Assertions.assertEquals(p.getPolicyObjects(), Collections.emptySet());
+    void whenNoObjectsThenSumZero() {
+        Policy p = new Policy(null, null, Collections.emptySet());
+        Assertions.assertEquals(BigDecimal.ZERO, p.getInsuredAmountByType(RiskType.THEFT));
     }
 
 }
