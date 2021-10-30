@@ -9,13 +9,14 @@ import java.math.RoundingMode;
 
 public class PremiumCalculator {
 
-    /*
-    PREMIUM = PREMIUM_FIRE + PREMIUM_THEFT */
-    public static BigDecimal calculate(Policy policy) {
-        BigDecimal premiumFire = new FirePolicyCalculator(policy).calculatePremium();
-        BigDecimal premiumTheft = new TheftPolicyCalculator(policy).calculatePremium();
-        BigDecimal premium = premiumFire.add(premiumTheft);
-        return premium.setScale(2, RoundingMode.UP);
+    public static String calculate(Policy policy) {
+        String result = "0.00 EUR";
+        if (policy != null) {
+            BigDecimal premiumFire = new FirePolicyCalculator(policy).calculatePremium();
+            BigDecimal premiumTheft = new TheftPolicyCalculator(policy).calculatePremium();
+            BigDecimal premium = premiumFire.add(premiumTheft);
+            result = premium.setScale(2, RoundingMode.UP) + " EUR";
+        }
+        return result;
     }
-
 }

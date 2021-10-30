@@ -6,8 +6,8 @@ import com.pm.homework.beans.policy.object.subobject.PolicySubObject;
 import java.math.BigDecimal;
 
 public class PolicyCalculator {
-    private BigDecimal sumInsured;
-    private BigDecimal coefficient;
+    private final BigDecimal sumInsured;
+    private final BigDecimal coefficient;
 
     public PolicyCalculator(PolicyCalculatorConfiguration configuration,
                             Policy policy) {
@@ -20,10 +20,6 @@ public class PolicyCalculator {
                 configuration.getLargerSumCoefficient() : configuration.getDefaultCoefficient();
     }
 
-    /*    PREMIUM_FIRE = SUM_INSURED_FIRE * COEFFICIENT_FIRE
-        SUM_INSURED_FIRE - total sum insured of all policy's sub-objects with type "Fire"
-        COEFFICIENT_FIRE - by default 0.014 but if SUM_INSURED_FIRE is over 100 then 0.024
-    */
     public BigDecimal calculatePremium() {
         return sumInsured.multiply(coefficient);
     }

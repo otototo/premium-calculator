@@ -6,6 +6,7 @@ import com.pm.homework.beans.policy.object.PolicyObject;
 import com.pm.homework.beans.policy.object.subobject.PolicySubObject;
 import com.pm.homework.beans.policy.object.subobject.RiskType;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -21,8 +22,8 @@ public class PremiumCalculatorTest {
 
     static Stream<Arguments> fireAndTheftInsuranceSource() {
         return Stream.of(
-                Arguments.of(BigDecimal.valueOf(100.00), BigDecimal.valueOf(8.00), BigDecimal.valueOf(2.28)),
-                Arguments.of(BigDecimal.valueOf(500.00), BigDecimal.valueOf(102.51), BigDecimal.valueOf(17.13))
+                Arguments.of(BigDecimal.valueOf(100.00), BigDecimal.valueOf(8.00), "2.28 EUR"),
+                Arguments.of(BigDecimal.valueOf(500.00), BigDecimal.valueOf(102.51), "17.13 EUR")
         );
     }
 
@@ -30,7 +31,7 @@ public class PremiumCalculatorTest {
     @MethodSource("fireAndTheftInsuranceSource")
     public void givenFireAndTheftInsuranceReturnCorrectPremium(BigDecimal fireInsuranceAmount,
                                                                BigDecimal theftInsuranceAmount,
-                                                               BigDecimal expectedPremium) {
+                                                               String expectedPremium) {
         //given
         PolicySubObject fireInsurance = new PolicySubObject("fireInsurance", RiskType.FIRE, fireInsuranceAmount);
         PolicySubObject theftInsurance = new PolicySubObject("theftInsurance", RiskType.THEFT, theftInsuranceAmount);
@@ -39,10 +40,24 @@ public class PremiumCalculatorTest {
         Policy policy = new Policy(POLICY_NUMBER, STATUS, policyObjects);
 
         //when
-        BigDecimal premium = PremiumCalculator.calculate(policy);
+        String premium = PremiumCalculator.calculate(policy);
 
         //then
         Assertions.assertEquals(expectedPremium, premium);
     }
 
+    @Test
+    void givenNullValuesAsInputsCalculatorDoesNotBreak() {
+        String expect = "0.00 EUR";
+        Assertions.assertEquals(expect, PremiumCalculator.calculate(null));
+        Assertions.assertEquals(expect, PremiumCalculator.calculate(
+                new Policy(null, null, null)));
+        Assertions.assertEquals(expect, PremiumCalculator.calculate(
+                new Policy(null, null,
+                        Set.of(new PolicyObject(null, null)))));
+        Assertions.assertEquals(expect, PremiumCalculator.calculate(
+                new Policy(null, null,
+                        Set.of(new PolicyObject(null,
+                                Set.of(new PolicySubObject(null, null, null)))))));
+    }
 }

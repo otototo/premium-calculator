@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.Set;
 
 public class PolicyObjectTest {
@@ -23,5 +24,11 @@ public class PolicyObjectTest {
         Assertions.assertEquals(po1.getName(), po3.getName());
         Assertions.assertNotEquals(po1, po3);
         Assertions.assertNotEquals(po1.hashCode(), po3.hashCode());
+    }
+
+    @Test
+    void defaultsNullsForSubObjects() {
+        PolicyObject po = new PolicyObject(null, null);
+        Assertions.assertEquals(po.getPolicySubObjects(), Collections.emptySet());
     }
 }

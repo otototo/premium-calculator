@@ -10,7 +10,7 @@ import java.util.Set;
 class PolicyTest {
 
     @Test
-    void beanEqualityTest() {
+    void verifyBeanEquality() {
         PolicyObject po1 = new PolicyObject("456", Collections.emptySet());
         Policy p1 = new Policy("123", PolicyStatus.REGISTERED, Set.of(po1));
         Policy p2 = new Policy("123", PolicyStatus.REGISTERED, Set.of(po1));
@@ -22,6 +22,13 @@ class PolicyTest {
         Assertions.assertEquals(p1.getStatus(), p2.getStatus());
         Assertions.assertNotEquals(p1, p3);
         Assertions.assertNotEquals(p1.hashCode(), p3.hashCode());
+    }
+
+    @Test
+    void defaultsNullsForStatusAndObjects() {
+        Policy p = new Policy(null, null, null);
+        Assertions.assertEquals(p.getStatus(), PolicyStatus.REGISTERED);
+        Assertions.assertEquals(p.getPolicyObjects(), Collections.emptySet());
     }
 
 }

@@ -1,5 +1,7 @@
 package com.pm.homework.beans.policy.object.subobject;
 
+import com.pm.homework.beans.ObjectUtil;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -10,8 +12,8 @@ public class PolicySubObject {
 
     public PolicySubObject(String name, RiskType riskType, BigDecimal sumInsured) {
         this.name = name;
-        this.riskType = riskType;
-        this.sumInsured = sumInsured;
+        this.riskType = ObjectUtil.defaultOnNull(riskType, RiskType.FIRE);
+        this.sumInsured = ObjectUtil.defaultOnNull(sumInsured, BigDecimal.ZERO);
     }
 
     public String getName() {

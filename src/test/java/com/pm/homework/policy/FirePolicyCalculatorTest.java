@@ -18,14 +18,6 @@ class FirePolicyCalculatorTest {
     public static final String POLICY_NUMBER = "123";
 
     @Test
-    void givenThereIsNoInsuranceThenUseDefaultCoefficient() {
-        Policy policy = new Policy(POLICY_NUMBER, PolicyStatus.APPROVED, Collections.emptySet());
-
-        FirePolicyCalculator calculator = new FirePolicyCalculator(policy);
-        Assertions.assertEquals(FirePolicyCalculator.DEFAULT_COEFFICIENT, calculator.getCoefficient());
-    }
-
-    @Test
     void givenThereIsNoFireInsuranceThenUseDefaultCoefficient() {
         PolicySubObject nso1 = new PolicySubObject("nso1", RiskType.THEFT, BigDecimal.valueOf(2.00));
         PolicySubObject nso2 = new PolicySubObject("nso2", RiskType.THEFT, BigDecimal.valueOf(3.00));
@@ -35,41 +27,6 @@ class FirePolicyCalculatorTest {
 
         FirePolicyCalculator calculator = new FirePolicyCalculator(policy);
         Assertions.assertEquals(FirePolicyCalculator.DEFAULT_COEFFICIENT, calculator.getCoefficient());
-    }
-
-    @Test
-    void givenFireInsuranceIsSmallThenUseDefaultCoefficient() {
-        PolicySubObject nso1 = new PolicySubObject("nso1", RiskType.FIRE, BigDecimal.valueOf(2.00));
-        PolicySubObject nso2 = new PolicySubObject("nso2", RiskType.FIRE, BigDecimal.valueOf(3.00));
-        PolicyObject p1 = new PolicyObject("n1", Set.of(nso1, nso2));
-        Set<PolicyObject> objects = Set.of(p1);
-        Policy policy = new Policy(POLICY_NUMBER, PolicyStatus.APPROVED, objects);
-
-        FirePolicyCalculator calculator = new FirePolicyCalculator(policy);
-        Assertions.assertEquals(FirePolicyCalculator.DEFAULT_COEFFICIENT, calculator.getCoefficient());
-    }
-
-    @Test
-    void givenFireInsuranceIsLargeSingleThenUseDefaultCoefficient() {
-        PolicySubObject nso1 = new PolicySubObject("nso1", RiskType.FIRE, BigDecimal.valueOf(300.00));
-        PolicyObject p1 = new PolicyObject("n1", Set.of(nso1));
-        Set<PolicyObject> objects = Set.of(p1);
-        Policy policy = new Policy(POLICY_NUMBER, PolicyStatus.APPROVED, objects);
-
-        FirePolicyCalculator calculator = new FirePolicyCalculator(policy);
-        Assertions.assertEquals(FirePolicyCalculator.LARGER_SUM_COEFFICIENT, calculator.getCoefficient());
-    }
-
-    @Test
-    void givenFireInsuranceIsLargeMultiThenUseDefaultCoefficient() {
-        PolicySubObject nso1 = new PolicySubObject("nso1", RiskType.FIRE, BigDecimal.valueOf(200.00));
-        PolicySubObject nso2 = new PolicySubObject("nso2", RiskType.FIRE, BigDecimal.valueOf(300.00));
-        PolicyObject p1 = new PolicyObject("n1", Set.of(nso1, nso2));
-        Set<PolicyObject> objects = Set.of(p1);
-        Policy policy = new Policy(POLICY_NUMBER, PolicyStatus.APPROVED, objects);
-
-        FirePolicyCalculator calculator = new FirePolicyCalculator(policy);
-        Assertions.assertEquals(FirePolicyCalculator.LARGER_SUM_COEFFICIENT, calculator.getCoefficient());
     }
 
     @Test

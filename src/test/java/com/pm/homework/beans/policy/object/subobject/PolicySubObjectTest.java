@@ -18,4 +18,11 @@ class PolicySubObjectTest {
         Assertions.assertNotEquals(pso1, pso3);
         Assertions.assertNotEquals(pso1.hashCode(), pso3.hashCode());
     }
+
+    @Test
+    void defaultsNullsForRiskTypeAndCostSubObjects() {
+        PolicySubObject pos = new PolicySubObject(null, null, null);
+        Assertions.assertEquals(pos.getRiskType(), RiskType.FIRE);
+        Assertions.assertEquals(pos.getSumInsured(), BigDecimal.ZERO);
+    }
 }

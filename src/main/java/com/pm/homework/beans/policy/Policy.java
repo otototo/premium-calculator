@@ -1,7 +1,9 @@
 package com.pm.homework.beans.policy;
 
+import com.pm.homework.beans.ObjectUtil;
 import com.pm.homework.beans.policy.object.PolicyObject;
 
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
@@ -12,8 +14,8 @@ public class Policy {
 
     public Policy(String policyNumber, PolicyStatus status, Set<PolicyObject> policyObjects) {
         this.policyNumber = policyNumber;
-        this.status = status;
-        this.policyObjects = policyObjects;
+        this.status = ObjectUtil.defaultOnNull(status, PolicyStatus.REGISTERED);
+        this.policyObjects = ObjectUtil.defaultOnNull(policyObjects, Collections.emptySet());
     }
 
     public String getPolicyNumber() {
